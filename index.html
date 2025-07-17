@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Blueprint: AI Application Analyzer v3</title>
+    <title>Interactive Blueprint: AI Application Analyzer v4</title>
     <!-- Chosen Palette: Brilliant Blues -->
     <!-- 
       Application Structure Plan: The SPA structure has been significantly updated to incorporate more detailed, client-friendly diagrams based on user feedback and reference materials.
@@ -35,8 +35,12 @@
         .diagram-step { transition: all 0.2s ease-in-out; }
         .diagram-step:hover { transform: scale(1.03); border-color: #7a5195; }
         .diagram-arrow { color: #7a5195; font-weight: bold; }
-        .doc-chunk { transition: all 0.2s ease-in-out; }
-        .chunk-diagram:hover .doc-chunk { transform: scale(1.05); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .chunking-strategy { border-left-width: 3px; padding-left: 1rem; }
+        .chunk { border: 1px solid; border-radius: 0.25rem; padding: 0.25rem 0.5rem; margin-top: 0.25rem; background-color: white; }
+        .plugin-box { background-color: #f0f4f8; border: 2px dashed #cbd5e1; }
+        .plugin-node { background-color: white; border: 1px solid #e2e8f0; }
+        .timeline-line { background-color: #7a5195; }
+        .timeline-point { background-color: white; border: 3px solid #7a5195; }
     </style>
 </head>
 <body class="text-gray-700">
@@ -80,96 +84,61 @@
         <hr class="my-20 border-gray-300">
 
         <section id="engine" class="my-16 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-center mb-4 text-[#003f5c]">How It Works: The RAG AI Engine</h2>
-            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">To ensure our AI provides accurate, up-to-date answers, we use a powerful technique called Retrieval-Augmented Generation (RAG). This two-part process involves first teaching the AI from an expert knowledge base, and then using that knowledge to answer user questions.</p>
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#003f5c]">Our Simplified, "Plugin-Based" AI Engine</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Complex articles can make RAG seem intimidating. In reality, we will use a modern **AI Workflow Platform** that turns these complex processes into a simple, visual flowchart. We connect pre-built "plugins" to handle each step, giving us all the power of RAG without the risk of building it from scratch.</p>
             
-            <!-- Part 1: The Art of Chunking -->
-            <div class="bg-white p-6 md:p-8 rounded-lg shadow-xl mb-12">
-                <h3 class="font-bold text-xl text-center mb-2 text-[#7a5195]">Part 1: The Art of Chunking</h3>
-                <p class="text-center text-sm text-gray-600 max-w-2xl mx-auto mb-8">Before the AI can learn, we must break down large documents into small, meaningful "chunks." This is the most critical step for ensuring accuracy. Here’s a visual explanation:</p>
-                
-                <div class="chunk-diagram grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
-                    <!-- Source Document -->
-                    <div class="md:col-span-2 bg-gray-100 p-4 rounded-lg border">
-                        <h4 class="font-bold text-center">Source Document</h4>
-                        <p class="text-xs text-center text-gray-500 mb-2">(e.g., Canada.ca page)</p>
-                        <div class="bg-white p-3 rounded shadow-inner text-xs text-gray-500">
-                            The Government of Canada requires all visitors to have a valid passport... Proof of funds is essential to demonstrate you can support yourself during your stay. This can include bank statements, pay stubs, or a letter from an employer. Family ties to your home country are also a key consideration...
-                        </div>
-                    </div>
-                    <!-- Arrow -->
-                    <div class="text-center diagram-arrow text-4xl">→</div>
-                    <!-- Chunks -->
-                    <div class="md:col-span-2 space-y-2">
-                        <h4 class="font-bold text-center">Information "Chunks"</h4>
-                        <p class="text-xs text-center text-gray-500 mb-2">(Ready for the AI to learn)</p>
-                        <div class="doc-chunk bg-blue-100 border-l-4 border-blue-500 p-2 rounded-r-lg shadow-sm">
-                            <p class="text-xs font-semibold">Chunk 1:</p>
-                            <p class="text-xs">The Government of Canada requires all visitors to have a valid passport...</p>
-                        </div>
-                        <div class="doc-chunk bg-green-100 border-l-4 border-green-500 p-2 rounded-r-lg shadow-sm">
-                            <p class="text-xs font-semibold">Chunk 2:</p>
-                            <p class="text-xs">Proof of funds is essential... This can include bank statements, pay stubs, or a letter from an employer.</p>
-                        </div>
-                        <div class="doc-chunk bg-purple-100 border-l-4 border-purple-500 p-2 rounded-r-lg shadow-sm">
-                            <p class="text-xs font-semibold">Chunk 3:</p>
-                            <p class="text-xs">Family ties to your home country are also a key consideration...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Part 2: The RAG Pipeline -->
             <div class="bg-white p-6 md:p-8 rounded-lg shadow-xl">
-                 <h3 class="font-bold text-xl text-center mb-2 text-[#ef5675]">Part 2: The RAG Pipeline in Action</h3>
-                 <p class="text-center text-sm text-gray-600 max-w-2xl mx-auto mb-8">Once our knowledge base is built, here’s how the system answers a user's question in real-time. Hover over the steps for details.</p>
-                <div id="rag-pipeline" class="space-y-4">
-                    <!-- Step 1: User Query -->
-                    <div class="diagram-step flex flex-col md:flex-row items-center gap-4 p-4 border-2 rounded-lg" data-info="The process starts when a user asks a question, like 'What do I need for proof of funds?'">
-                        <div class="bg-[#ef5675] text-white rounded-full h-12 w-12 flex-shrink-0 flex items-center justify-center font-bold text-xl">1</div>
-                        <div class="text-3xl">🗣️</div>
-                        <div>
-                            <h4 class="font-bold">User Asks a Question</h4>
-                            <p class="text-sm text-gray-600">The user's query is the trigger for the entire RAG pipeline.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-bold text-lg mb-4">Step 1: User Input</h3>
+                        <div class="plugin-node p-4 rounded-lg shadow w-full">
+                            <div class="text-4xl">🗣️</div>
+                            <h4 class="font-semibold mt-2">User Uploads PDF</h4>
+                            <p class="text-xs text-gray-500">via Laravel Website</p>
                         </div>
                     </div>
-                    <div class="pl-5 text-3xl diagram-arrow">↓</div>
-                    <!-- Step 2: Retrieval -->
-                    <div class="diagram-step flex flex-col md:flex-row items-center gap-4 p-4 border-2 rounded-lg" data-info="The system searches the knowledge base to find the most relevant 'chunks' of information related to 'proof of funds'.">
-                        <div class="bg-[#bc5090] text-white rounded-full h-12 w-12 flex-shrink-0 flex items-center justify-center font-bold text-xl">2</div>
-                        <div class="text-3xl">🔍</div>
-                        <div>
-                            <h4 class="font-bold">Retrieve Relevant Information</h4>
-                            <p class="text-sm text-gray-600">Our system finds the exact text snippets from our expert documents that match the user's question.</p>
-                        </div>
-                        <div class="ml-auto bg-green-100 border-l-4 border-green-500 p-2 rounded-r-lg shadow-sm hidden md:block">
-                            <p class="text-xs">"Proof of funds is essential... This can include bank statements, pay stubs..."</p>
-                        </div>
-                    </div>
-                    <div class="pl-5 text-3xl diagram-arrow">↓</div>
-                    <!-- Step 3: Augmentation -->
-                     <div class="diagram-step flex flex-col md:flex-row items-center gap-4 p-4 border-2 rounded-lg" data-info="The original question and the retrieved information are combined into a new, detailed prompt for the AI.">
-                        <div class="bg-[#7a5195] text-white rounded-full h-12 w-12 flex-shrink-0 flex items-center justify-center font-bold text-xl">3</div>
-                        <div class="text-3xl">➕</div>
-                        <div>
-                            <h4 class="font-bold">Augment the Prompt</h4>
-                            <p class="text-sm text-gray-600">We give the AI the user's question AND the answer from our knowledge base, ensuring it has the right context.</p>
-                        </div>
-                    </div>
-                    <div class="pl-5 text-3xl diagram-arrow">↓</div>
-                    <!-- Step 4: Generation -->
-                    <div class="diagram-step flex flex-col md:flex-row items-center gap-4 p-4 border-2 rounded-lg" data-info="The AI (LLM) uses the augmented prompt to generate a final, comprehensive, and accurate answer for the user.">
-                        <div class="bg-[#374c80] text-white rounded-full h-12 w-12 flex-shrink-0 flex items-center justify-center font-bold text-xl">4</div>
-                        <div class="text-3xl">💬</div>
-                        <div>
-                            <h4 class="font-bold">Generate the Final Answer</h4>
-                            <p class="text-sm text-gray-600">The AI synthesizes the information into a helpful, conversational response that is sent to the user.</p>
+
+                    <div class="md:col-span-2 flex flex-col">
+                        <h3 class="font-bold text-lg mb-4 text-center">Step 2: AI Workflow Platform Processes the Request</h3>
+                        <div class="plugin-box p-4 rounded-lg w-full flex-grow">
+                            <div class="flex flex-col md:flex-row items-center justify-around h-full gap-4">
+                                <div class="plugin-node p-3 rounded-lg shadow text-center">
+                                    <div class="text-3xl">📄</div>
+                                    <h4 class="font-semibold text-sm">PDF Loader</h4>
+                                    <p class="text-xs text-gray-500">Extracts & Chunks Text</p>
+                                </div>
+                                <div class="diagram-arrow text-2xl">→</div>
+                                <div class="plugin-node p-3 rounded-lg shadow text-center">
+                                    <div class="text-3xl">🗄️</div>
+                                    <h4 class="font-semibold text-sm">Vector Store</h4>
+                                    <p class="text-xs text-gray-500">Finds Relevant Info</p>
+                                </div>
+                                <div class="diagram-arrow text-2xl">→</div>
+                                <div class="plugin-node p-3 rounded-lg shadow text-center">
+                                    <div class="text-3xl">🧠</div>
+                                    <h4 class="font-semibold text-sm">LLM Plugin</h4>
+                                    <p class="text-xs text-gray-500">Generates Answer</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="rag-details" class="mt-8 bg-purple-50 p-4 rounded-lg border-l-4 border-purple-400 min-h-[50px]">
-                    <p class="text-gray-600 italic">Hover over a pipeline step to learn more.</p>
+
+                <div class="flex justify-center my-6">
+                    <div class="diagram-arrow text-4xl">↓</div>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                    <div class="md:col-start-2 flex flex-col items-center text-center">
+                        <h3 class="font-bold text-lg mb-4">Step 3: Output</h3>
+                         <div class="plugin-node p-4 rounded-lg shadow w-full">
+                            <div class="text-4xl">💬</div>
+                            <h4 class="font-semibold mt-2">Final Answer</h4>
+                            <p class="text-xs text-gray-500">Sent back to the user</p>
+                        </div>
+                    </div>
+                </div>
+                 <p class="text-center text-sm text-gray-600 mt-8">As you can see, the platform handles all the complexity. Our job is to visually connect these powerful plugins to build the exact logic we need, which is dramatically faster and more reliable.</p>
             </div>
         </section>
 
@@ -178,7 +147,6 @@
         <section id="features" class="my-16 scroll-mt-20">
             <h2 class="text-3xl font-bold text-center mb-12 text-[#003f5c]">Feature Deep Dive</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Analysis Feature -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
                     <h3 class="text-2xl font-bold mb-4 text-[#374c80]">In-Depth Application Analysis</h3>
                     <p class="mb-6">The asynchronous analysis provides a detailed breakdown of an applicant's materials, identifying strengths and weaknesses before official submission.</p>
@@ -193,7 +161,6 @@
                        <p class="text-sm mt-3 p-3 bg-blue-50 border-l-2 border-blue-400 rounded-r-md">"Your proof of funds seems low for a 3-week trip. Consider adding statements from another bank account or a letter of financial support."</p>
                     </div>
                 </div>
-                <!-- Live Chat Feature -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
                     <h3 class="text-2xl font-bold mb-4 text-[#bc5090]">Live AI Consultation</h3>
                     <p class="mb-6">The live chat provides instant, on-demand support, allowing users to get quick answers to specific questions without waiting for a full review.</p>
@@ -233,7 +200,7 @@
                     <h3 class="text-xl font-bold mb-4">Core Technology Stack</h3>
                     <div class="grid grid-cols-2 gap-4 text-center">
                         <div class="bg-gray-100 p-4 rounded-lg"><h4 class="font-bold">Laravel</h4><p class="text-sm">Frontend & API</p></div>
-                        <div class="bg-gray-100 p-4 rounded-lg"><h4 class="font-bold">Self-Hosted Automation</h4><p class="text-sm">(e.g., Docker+vps)</p></div>
+                        <div class="bg-gray-100 p-4 rounded-lg"><h4 class="font-bold">AI Workflow Platform</h4><p class="text-sm">(Self-Hosted)</p></div>
                         <div class="bg-gray-100 p-4 rounded-lg"><h4 class="font-bold">OpenAI</h4><p class="text-sm">Language Model</p></div>
                         <div class="bg-gray-100 p-4 rounded-lg"><h4 class="font-bold">Vector Database</h4><p class="text-sm">For RAG</p></div>
                     </div>
@@ -249,17 +216,43 @@
 
         <hr class="my-20 border-gray-300">
 
+        <!-- ROADMAP SECTION - REBUILT -->
         <section id="roadmap" class="my-16 scroll-mt-20">
              <h2 class="text-3xl font-bold text-center mb-4 text-[#003f5c]">Project Roadmap</h2>
             <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Our phased approach ensures a rapid launch of core features while building towards a state-of-the-art, self-improving AI system.</p>
-            <div class="space-y-8">
-                <div class="bg-white p-6 rounded-lg shadow-lg border-l-4 border-[#374c80]">
-                    <h3 class="text-xl font-bold text-[#374c80]">Phase 1: Foundation & Launch</h3>
-                    <p class="mt-2 text-sm">Develop the RAG engine, build the application analysis feature, and launch the initial version of the live AI consultant. Begin collecting consultant feedback for Phase 2.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg border-l-4 border-[#bc5090]">
-                    <h3 class="text-xl font-bold text-[#bc5090]">Phase 2: Enhancement & Fine-Tuning</h3>
-                    <p class="mt-2 text-sm">Using the data from Phase 1, fine-tune a private AI model to dramatically increase its accuracy and consistency. Enhance the chat feature with more complex conversational abilities.</p>
+            
+            <div class="relative w-full">
+                <!-- Timeline line -->
+                <div class="hidden md:block absolute top-5 left-0 w-full h-1 timeline-line"></div>
+                
+                <div class="relative flex flex-col md:flex-row justify-between w-full">
+                    <!-- Phase 1 -->
+                    <div class="flex-1 md:pr-8">
+                        <div class="flex md:flex-col items-center">
+                            <div class="timeline-point w-10 h-10 rounded-full flex items-center justify-center z-10">
+                                <div class="text-xl font-bold text-[#7a5195]">1</div>
+                            </div>
+                            <div class="w-full md:h-12 md:w-px h-px bg-gray-300 md:bg-gray-300"></div>
+                        </div>
+                        <div class="mt-4 bg-white p-6 rounded-lg shadow-lg border-t-4 border-[#374c80]">
+                            <h3 class="text-xl font-bold text-[#374c80]">Phase 1: Foundation & Launch</h3>
+                            <p class="mt-2 text-sm">Develop the RAG engine using our AI workflow platform, build the application analysis feature, and launch the initial version of the live AI consultant. Begin collecting consultant feedback for Phase 2.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2 -->
+                    <div class="flex-1 md:pl-8 mt-8 md:mt-0">
+                         <div class="flex md:flex-col items-center">
+                            <div class="timeline-point w-10 h-10 rounded-full flex items-center justify-center z-10">
+                                <div class="text-xl font-bold text-[#7a5195]">2</div>
+                            </div>
+                            <div class="w-full md:h-12 md:w-px h-px bg-gray-300 md:bg-gray-300"></div>
+                        </div>
+                        <div class="mt-4 bg-white p-6 rounded-lg shadow-lg border-t-4 border-[#bc5090]">
+                            <h3 class="text-xl font-bold text-[#bc5090]">Phase 2: Enhancement & Fine-Tuning</h3>
+                            <p class="mt-2 text-sm">Using the data from Phase 1, fine-tune a private AI model to dramatically increase its accuracy and consistency. Enhance the chat feature with more complex conversational abilities.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -267,7 +260,7 @@
     </main>
 
     <footer class="text-center py-10 mt-12 bg-gray-800 text-gray-400">
-        <p class="text-sm">Interactive Project Blueprint v3</p>
+        <p class="text-sm">Interactive Project Blueprint v4</p>
     </footer>
 
     <script>
@@ -276,21 +269,6 @@
                 darkBlue: '#003f5c', midBlue: '#374c80', purple: '#7a5195',
                 magenta: '#bc5090', pink: '#ef5675', orange: '#ff764a', yellow: '#ffa600'
             };
-
-            const ragPipeline = document.getElementById('rag-pipeline');
-            const ragDetails = document.getElementById('rag-details');
-            ragPipeline.addEventListener('mouseover', (e) => {
-                const step = e.target.closest('.diagram-step');
-                if (step && step.dataset.info) {
-                    ragDetails.innerHTML = `<p class="font-semibold">${step.dataset.info}</p>`;
-                }
-            });
-             ragPipeline.addEventListener('mouseout', (e) => {
-                 const step = e.target.closest('.diagram-step');
-                 if (step) {
-                    ragDetails.innerHTML = `<p class="text-gray-600 italic">Hover over a pipeline step to learn more.</p>`;
-                 }
-             });
             
             const tooltipTitleCallback = (tooltipItems) => {
                 const item = tooltipItems[0];
