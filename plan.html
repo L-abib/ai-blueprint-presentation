@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Blueprint: AI Application Analyzer</title>
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- 
+      Application Structure Plan: The SPA is structured as a top-to-bottom narrative to guide the client through the project logically.
+      1. Hero: Grabs attention with the core value proposition.
+      2. The Solution: Presents an interactive workflow diagram, the centerpiece of the application, to explain the process flow. Users can interact with nodes for more detail.
+      3. The Deliverables: Breaks down the tangible outputs (user report, consultant dashboard) using a mix of charts and structured text to make abstract features concrete.
+      4. The Roadmap: A visual timeline shows the project's evolution from Phase 1 to Phase 2, explaining the 'learning loop' concept clearly.
+      5. The Investment: Visualizes costs using charts and callouts, framing it as a scalable investment rather than just an expense.
+      6. Security & Trust: A final section with icons to build confidence and address potential data privacy concerns.
+      This narrative structure was chosen because it mirrors a presentation, moving from the "what" and "how" to the "what's next" and "why you can trust us," making it intuitive for a client to follow.
+    -->
+    <!-- 
+      Visualization & Content Choices: 
+      - Report Info: Complete User/System Workflow -> Goal: Organize -> Viz: Interactive Flowchart (HTML/CSS) -> Interaction: Hover/Click on nodes reveals details -> Justification: The best way to visualize a complex process. Interactivity avoids clutter by layering information. -> Library/Method: Vanilla JS + Tailwind CSS. CONFIRM: NO SVG/Mermaid.
+      - Report Info: AI-generated Success Probability -> Goal: Inform -> Viz: Donut Chart -> Interaction: Hover for tooltip -> Justification: Visually engaging way to show a key percentage. -> Library/Method: Chart.js (Canvas).
+      - Report Info: AI-generated Findings (Missing/Incorrect Info) -> Goal: Organize -> Viz: Styled Lists with Icons -> Interaction: Static -> Justification: Clear and scannable way to present qualitative findings. -> Library/Method: HTML/CSS with Unicode icons. CONFIRM: NO SVG.
+      - Report Info: Project Roadmap (Phase 1 & 2) -> Goal: Change -> Viz: Horizontal Timeline -> Interaction: Static -> Justification: Intuitive way to represent a phased project lifecycle. -> Library/Method: HTML/CSS. CONFIRM: NO SVG.
+      - Report Info: Project Costs (Monthly & Per-Unit) -> Goal: Compare -> Viz: Bar Chart & Big Number Callouts -> Interaction: Hover for tooltips -> Justification: Bar chart for direct comparison of phases; big numbers for high-impact stats. -> Library/Method: Chart.js (Canvas) & HTML/CSS.
+      - Report Info: Security Features (PIPEDA, SSL, etc.) -> Goal: Inform -> Viz: Icon Grid -> Interaction: Static -> Justification: Quickly communicates core security pillars. -> Library/Method: HTML/CSS with Unicode icons. CONFIRM: NO SVG.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        .nav-link { transition: color 0.3s; }
+        .nav-link.active { color: #ef5675; font-weight: 600; }
+        .flow-node { cursor: pointer; transition: all 0.3s ease; border-width: 3px; }
+        .flow-node:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <!-- Sticky Navigation -->
+    <nav class="sticky top-0 bg-white/80 backdrop-blur-md shadow-sm z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center items-center h-16 space-x-4 md:space-x-8 text-sm md:text-base font-medium text-gray-600">
+                <a href="#solution" class="nav-link">The Solution</a>
+                <a href="#deliverables" class="nav-link">Deliverables</a>
+                <a href="#roadmap" class="nav-link">Roadmap</a>
+                <a href="#investment" class="nav-link">Investment</a>
+                <a href="#security" class="nav-link">Security</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-br from-[#003f5c] to-[#374c80] text-white text-center py-20 px-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Transforming Visa Applications with AI</h1>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto opacity-90">An interactive blueprint for an intelligent system designed to increase success rates, streamline consultant workflow, and create a smarter immigration service.</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <!-- Section 1: The Solution -->
+        <section id="solution" class="my-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#003f5c]">Our Solution: An End-to-End Intelligent Workflow</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">This diagram illustrates the automated journey of an application from submission to expert review. The entire process is orchestrated by **n8n**, a powerful automation hub, ensuring seamless data flow and processing. Click on each step to learn more.</p>
+            
+            <div id="workflow-diagram" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-y-8 md:gap-x-6 items-center text-center">
+                <!-- Nodes will be inserted by JS -->
+            </div>
+            
+            <div id="workflow-details" class="mt-12 bg-white p-6 rounded-lg shadow-lg border-l-4 border-[#7a5195] min-h-[100px] transition-all duration-300">
+                <p class="text-gray-500 italic">Click a step above to see the details.</p>
+            </div>
+        </section>
+
+        <hr class="my-20 border-gray-300">
+
+        <!-- Section 2: Key Deliverables -->
+        <section id="deliverables" class="my-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#003f5c]">Key Deliverables: Value for Users & Consultants</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">The system will produce two core outputs: a comprehensive, AI-generated report for the applicant, and a detailed case file for your expert consultants to review.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                
+                <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 text-[#bc5090]">For the Applicant: The AI-Powered Report</h3>
+                    <p class="text-sm mb-6">Applicants receive an immediate, actionable report designed to help them strengthen their submission. This report breaks down complex requirements into easy-to-understand feedback.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-4 rounded-lg border">
+                           <h4 class="font-semibold flex items-center"><span class="text-xl mr-2">🎯</span>Success Probability</h4>
+                           <p class="text-xs text-gray-600 mt-1">An estimated chance of success to set clear expectations.</p>
+                           <div class="chart-container !h-48 !max-h-48 mt-2">
+                               <canvas id="successProbabilityChart"></canvas>
+                           </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border">
+                           <h4 class="font-semibold flex items-center"><span class="text-xl mr-2">🔍</span>Content Analysis</h4>
+                           <p class="text-xs text-gray-600 mt-1">Identifies specific gaps in the application.</p>
+                           <ul class="text-sm mt-4 space-y-2">
+                               <li class="flex items-center"><span class="text-green-500 mr-2">✔</span><span class="font-medium text-gray-500 mr-1">Missing Info:</span> None Found</li>
+                               <li class="flex items-center"><span class="text-red-500 mr-2">✖</span><span class="font-medium text-gray-500 mr-1">Incorrect Info:</span> 1 Found</li>
+                               <li class="flex items-center"><span class="text-yellow-500 mr-2">❗</span><span class="font-medium text-gray-500 mr-1">Irrelevant Info:</span> 2 Found</li>
+                           </ul>
+                        </div>
+                        <div class="md:col-span-2 bg-gray-50 p-4 rounded-lg border">
+                            <h4 class="font-semibold flex items-center"><span class="text-xl mr-2">💡</span>Improvement Suggestions</h4>
+                            <p class="text-xs text-gray-600 mt-1">Actionable recommendations from the AI.</p>
+                            <p class="text-sm mt-3 p-3 bg-blue-50 border-l-2 border-blue-400 rounded-r-md">"Your travel purpose description could be more detailed. Consider adding a day-by-day itinerary and providing stronger proof of financial stability."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+                     <h3 class="text-xl font-bold mb-4 text-[#ef5675]">For the Consultant: The Review Dashboard</h3>
+                     <p class="text-sm mb-6">A new dashboard will empower your team. It provides a consolidated view of the user's submission alongside the AI's analysis, creating the perfect feedback loop.</p>
+                     <div class="bg-gray-800 text-white p-4 rounded-lg font-mono text-xs shadow-inner">
+                         <p><span class="text-green-400">GET</span> /api/case/12345</p>
+                         <p class="mt-4">{</p>
+                         <p class="ml-4">"user_data": { ... },</p>
+                         <p class="ml-4">"document_text": "...",</p>
+                         <p class="ml-4">"ai_analysis": {</p>
+                         <p class="ml-8">"successProbability": 82,</p>
+                         <p class="ml-8">"findings": [...]</p>
+                         <p class="ml-4">}</p>
+                         <p>}</p>
+                     </div>
+                     <p class="text-sm mt-6">This structured data allows consultants to quickly verify the AI's findings, add their own expert insights, and provide feedback that will be used to <span class="font-semibold text-[#7a5195]">fine-tune the AI model</span> over time.</p>
+                </div>
+            </div>
+        </section>
+        
+        <hr class="my-20 border-gray-300">
+
+        <!-- Section 3: Roadmap -->
+        <section id="roadmap" class="my-16 scroll-mt-20">
+             <h2 class="text-3xl font-bold text-center mb-4 text-[#003f5c]">Project Roadmap: A Phased Approach to Intelligence</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">We will build and enhance the system in two distinct phases. This strategy ensures a rapid launch while building a long-term competitive advantage through a self-improving AI.</p>
+            <div class="relative">
+                <!-- The connecting line -->
+                <div class="absolute left-1/2 top-0 h-full w-0.5 bg-[#7a5195] hidden md:block"></div>
+                <!-- Phase 1 -->
+                <div class="md:flex items-center mb-12">
+                    <div class="md:w-1/2 md:pr-8">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                           <h3 class="text-xl font-bold text-[#374c80]">Phase 1: Launch & Data Collection</h3>
+                           <p class="text-sm mt-2">We launch quickly with a powerful, general-purpose AI model (GPT-4o). The system immediately starts providing value to users while the consultant dashboard captures expert feedback, creating a high-quality dataset for the next phase.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-8 text-center mt-4 md:mt-0">
+                        <div class="bg-orange-100 border border-orange-300 rounded-lg p-4 inline-block">
+                           <div class="text-4xl font-extrabold text-[#ff764a]">100+</div>
+                           <p class="text-sm font-semibold">High-Quality Case Files Collected</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Phase 2 -->
+                <div class="md:flex flex-row-reverse items-center">
+                     <div class="md:w-1/2 md:pl-8">
+                         <div class="bg-white p-6 rounded-lg shadow-lg">
+                             <h3 class="text-xl font-bold text-[#bc5090]">Phase 2: Enhancement & Fine-Tuning</h3>
+                             <p class="text-sm mt-2">Using the dataset from Phase 1, we will train a private, fine-tuned AI model. This new model will become an expert in *your specific* approach, delivering more accurate, consistent, and valuable analysis that no competitor can replicate.</p>
+                         </div>
+                    </div>
+                     <div class="md:w-1/2 md:pr-8 text-center mt-4 md:mt-0">
+                         <div class="bg-purple-100 border border-purple-300 rounded-lg p-4 inline-block">
+                             <p class="text-4xl font-extrabold text-[#7a5195]">95%+</p>
+                             <p class="text-sm font-semibold">Target AI Accuracy & Consistency</p>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-20 border-gray-300">
+
+        <!-- Section 4: Investment -->
+        <section id="investment" class="my-16 scroll-mt-20">
+             <h2 class="text-3xl font-bold text-center mb-4 text-[#003f5c]">A Scalable Investment in Efficiency</h2>
+             <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">The architecture is designed for cost-effective scaling. Operational costs are predictable and low, while the one-time investment in fine-tuning yields significant returns in AI quality.</p>
+             <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                 <div class="md:col-span-3 bg-white p-6 rounded-lg shadow-lg">
+                     <h3 class="text-xl font-bold mb-4">Estimated Monthly & Training Costs</h3>
+                     <p class="text-sm mb-4">This chart shows the modest operational costs for the core services, and the minimal, periodic cost for a fine-tuning session.</p>
+                     <div class="chart-container">
+                         <canvas id="costsChart"></canvas>
+                     </div>
+                 </div>
+                 <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg flex flex-col justify-center text-center">
+                      <h3 class="text-xl font-bold mb-6">Ultra-Low Per-Analysis Cost</h3>
+                      <div class="my-4">
+                         <div class="text-6xl font-extrabold text-[#003f5c]">$0.05</div>
+                         <p class="text-sm font-medium text-gray-600 mt-1">Average Cost Per Full Application Analysis</p>
+                      </div>
+                      <p class="text-xs text-gray-500 mt-4">This highly scalable model means costs only grow with your user base, ensuring a positive return on investment.</p>
+                 </div>
+             </div>
+        </section>
+
+        <hr class="my-20 border-gray-300">
+
+        <!-- Section 5: Security -->
+        <section id="security" class="my-16 scroll-mt-20">
+             <h2 class="text-3xl font-bold text-center mb-4 text-[#003f5c]">Security & Trust by Design</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Protecting user data is our highest priority. The entire architecture is built on a foundation of robust security and privacy measures.</p>
+            <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-5xl mb-3">🛡️</div>
+                    <h3 class="font-bold text-lg">PIPEDA Compliance</h3>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-5xl mb-3">🔒</div>
+                    <h3 class="font-bold text-lg">SSL/TLS Encryption</h3>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-5xl mb-3">🗑️</div>
+                    <h3 class="font-bold text-lg">Temporary Storage</h3>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-5xl mb-3">🔑</div>
+                    <h3 class="font-bold text-lg">Header Authentication</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-10 mt-12 bg-gray-800 text-gray-400">
+        <p class="text-sm">Interactive Project Blueprint</p>
+        <p class="text-xs mt-1">Confidential & Proprietary</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const brilliantBlues = {
+                darkBlue: '#003f5c', midBlue: '#374c80', purple: '#7a5195',
+                magenta: '#bc5090', pink: '#ef5675', orange: '#ff764a', yellow: '#ffa600'
+            };
+
+            const workflowData = [
+                { id: 'input', title: '1. User Input', icon: '👤', color: brilliantBlues.darkBlue, details: 'A paid user submits their application details and documents (.pdf, .doc, .jpeg) via the Laravel site. The backend performs initial validation for file types and sizes.' },
+                { id: 'automation', title: '2. n8n Automation', icon: '⚙️', color: brilliantBlues.midBlue, details: 'A secure webhook triggers the n8n workflow. n8n orchestrates all subsequent steps, starting with extracting text from the uploaded documents using OCR.' },
+                { id: 'analysis', title: '3. AI Analysis', icon: '🧠', color: brilliantBlues.purple, details: 'The combined form data and document text is sent to a pre-trained OpenAI model (GPT-4o). A detailed prompt instructs the AI to act as an immigration expert.' },
+                { id: 'delivery', title: '4. Report Delivery', icon: '📄', color: brilliantBlues.magenta, details: 'The AI returns a structured JSON report. n8n formats this and sends it back to the Laravel application via an API to be displayed to the user.' },
+                { id: 'review', title: '5. Human Review', icon: '👨‍💼', color: brilliantBlues.pink, details: 'Simultaneously, a complete copy of the case (user data + AI analysis) is sent to the consultant dashboard for expert review and to provide feedback for future AI fine-tuning.' }
+            ];
+
+            const workflowDiagram = document.getElementById('workflow-diagram');
+            const workflowDetails = document.getElementById('workflow-details');
+            
+            workflowData.forEach(node => {
+                const nodeEl = document.createElement('div');
+                nodeEl.className = 'flow-node bg-white p-4 rounded-lg shadow-md';
+                nodeEl.style.borderColor = node.color;
+                nodeEl.dataset.nodeId = node.id;
+                nodeEl.innerHTML = `<div class="text-4xl mb-2">${node.icon}</div><h3 class="font-bold">${node.title}</h3>`;
+                workflowDiagram.appendChild(nodeEl);
+            });
+
+            workflowDiagram.addEventListener('click', (e) => {
+                const nodeEl = e.target.closest('.flow-node');
+                if (nodeEl) {
+                    const nodeId = nodeEl.dataset.nodeId;
+                    const nodeData = workflowData.find(n => n.id === nodeId);
+                    workflowDetails.style.borderColor = nodeData.color;
+                    workflowDetails.innerHTML = `<h4 class="font-bold text-lg mb-2" style="color: ${nodeData.color};">${nodeData.title}</h4><p>${nodeData.details}</p>`;
+                }
+            });
+            
+            const wrapLabel = (label, maxWidth) => {
+                const words = label.split(' ');
+                let lines = []; let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).trim().length > maxWidth) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = `${currentLine} ${word}`;
+                    }
+                });
+                lines.push(currentLine.trim());
+                return lines;
+            };
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                return Array.isArray(label) ? label.join(' ') : label;
+            };
+
+            const sharedTooltipOptions = { callbacks: { title: tooltipTitleCallback } };
+
+            new Chart(document.getElementById('successProbabilityChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Success Probability', 'Improvement Margin'],
+                    datasets: [{
+                        data: [82, 18],
+                        backgroundColor: [brilliantBlues.purple, '#e9ecef'],
+                        borderColor: ['#fff'], borderWidth: 2
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { display: false }, tooltip: sharedTooltipOptions } }
+            });
+
+            new Chart(document.getElementById('costsChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: [wrapLabel('Phase 1 Monthly Cost (Base Model)', 20), wrapLabel('Phase 2 Monthly Cost (Fine-Tuned)', 20), wrapLabel('Single Fine-Tuning Session', 20)],
+                    datasets: [{
+                        label: 'Estimated Cost (USD)',
+                        data: [110, 150, 2],
+                        backgroundColor: [brilliantBlues.midBlue, brilliantBlues.magenta, brilliantBlues.orange],
+                        maxBarThickness: 50
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                    scales: { x: { beginAtZero: true, ticks: { callback: value => '$' + value } } },
+                    plugins: { legend: { display: false }, tooltip: sharedTooltipOptions }
+                }
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            
+            const observerOptions = { rootMargin: '-50% 0px -50% 0px' };
+            
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => sectionObserver.observe(section));
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
